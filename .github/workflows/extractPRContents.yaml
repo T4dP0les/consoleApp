@@ -102,7 +102,7 @@ jobs :
           $releasePost = $releaseHT | convertto-json
           $uri = "{0}/repos/{1}/releases" -f "${{ github.api_url }}", "${{ github.repository }}"
           $releaseObj = invoke-restmethod -uri $uri -method 'POST' -body $releasePost -headers $headers
-          $releaseObj | converto-json
+          $releaseObj | convertto-json
           $releaseID = $releaseObj.id
           write-output "releaseId=$releaseID" | out-file $env:GITHUB_OUTPUT -encoding utf8 -append
 
