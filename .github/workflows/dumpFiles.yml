@@ -37,7 +37,7 @@ jobs:
     - name : dump folder structure
       shell : bash
       run : |
-        printenv
+        printenv | sort
         ls -al / 
         mkdir $HOME/artefact
         ls -al / > $HOME/artefact/allFiles.txt
