@@ -63,7 +63,7 @@ jobs :
       - name : dump file vars
         shell : pwsh
         run : |
-          get-contents $env:GITHUB_ENV
+          get-content $env:GITHUB_ENV
     
       - name : get var from previous job
         if : ${{ needs.extractPRContents.outputs.createRelease }}
