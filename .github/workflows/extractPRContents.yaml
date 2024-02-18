@@ -23,6 +23,11 @@ jobs :
         
     runs-on : ubuntu-latest
     steps :
+      - name : run composite action
+        uses : T4dP0les/consoleApp/actions/getChangedFiles@main
+
+
+
       - name : 'run powershell'
         shell : pwsh
         run : |
