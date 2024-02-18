@@ -37,7 +37,7 @@ jobs:
     - name : dump folder structure
       shell : bash
       run : |
-        get-childitem :env
+        printenv
         mkdir /home/artefact
         ls / > /home/artefact/allFiles.txt
         
