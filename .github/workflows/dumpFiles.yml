@@ -5,7 +5,7 @@ on:
   
 jobs:
 
-  build:
+  build-windows:
     runs-on: windows-latest  
 
     env:
@@ -17,11 +17,32 @@ jobs:
       run : |
         mkdir D:\artefact
         dir /s D:\ > D:\artefact\allFiles.txt
-        dir /s C:\ >> D:\artefact\allFiles.txt
+        REM dir /s C:\ >> D:\artefact\allFiles.txt
         
     # Upload
     - name: folder struct 
       uses: actions/upload-artifact@main
       with:
-        name: AllFiles.txt
+        name: AllFilesWindows.txt
         path: D:\Artefact
+
+
+  build-linux:
+    runs-on: ubuntu-latest  
+
+    env:
+      Solution_Name: your-solution-name                       
+
+    steps:
+    - name : dump folder structure
+      shell : bash
+      run : |
+        mkdir /artefact
+        ls / > /artefact/allFiles.txt
+        
+    # Upload
+    - name: folder struct 
+      uses: actions/upload-artifact@main
+      with:
+        name: AllFilesLinux.txt
+        path: /artefact
