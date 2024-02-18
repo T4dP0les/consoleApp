@@ -50,7 +50,9 @@ jobs:
         #Compress-Archive -Path $env:GITHUB_WORKSPACE/* -DestinationPath $env:HOME/artefact/Payload.zip
         write-host "HOME : $env:HOME"
         write-host "GITHUB_WORKSPACE : $env:GITHUB_WORKSPACE"
-        Compress-Archive -Path /home/runner/work/consoleApp/* -DestinationPath /home/runner/artefact/Payload.zip
+        #Compress-Archive -Path /home/runner/work/consoleApp/* -DestinationPath /home/runner/artefact/Payload.zip
+        Get-childitem -path /home/runner/work/consoleApp -recurse | Compress-Archive -DestinationPath /home/runner/artefact/Payload.zip
+        get-childitem -path /home/runner/artefact
     # Upload
     - name: Upload allFiles 
       uses: actions/upload-artifact@main
