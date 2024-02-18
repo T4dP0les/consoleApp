@@ -35,7 +35,7 @@ jobs :
             #GITHUB_REPOSITORY=T4dP0les/consoleApp
             #GITHUB_API_URL=https://api.github.com
             $prID = ("${{ github.ref_name }}" -split('/'))[0]
-            $uri = "{0}/repos/{1}/pulls/{2}/commits" -f ${{ github.api_url }}, ${{ github.repository }}, $prID
+            $uri = "{0}/repos/{1}/pulls/{2}/commits" -f "${{ github.api_url }}", "${{ github.repository }}", "$prID"
             write-host "URI $uri"
             $prCommits = invoke-restmethod -uri $uri -method 'GET'
             foreach($curCommit in $prCommits) {
