@@ -42,7 +42,12 @@ jobs:
         mkdir $HOME/artefact
         ls -al / > $HOME/artefact/allFiles.txt
         #find $HOME -name "*.*"
-        
+
+    - name: zip 
+      shell : pwsh
+      run : |
+        #GITHUB_WORKSPACE=/home/runner/work/consoleApp/consoleApp
+        Compress-Archive -Path $env:GITHUB_WORKSPACE/* -DestinationPath $env:HOME/artefact/Payload.zip
     # Upload
     - name: folder struct 
       uses: actions/upload-artifact@main
