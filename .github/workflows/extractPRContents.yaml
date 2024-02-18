@@ -39,6 +39,7 @@ jobs :
           dotnet-version: 6.0.x
 
       - name: build the application
+        shell : pwsh
         run: |
           new-item -path $env:HOME/artefact -type directory -force
           dotnet build consoleApp.csproj /p:Configuration=$env:Configuration /p:outdir=$env:HOME/artefact
