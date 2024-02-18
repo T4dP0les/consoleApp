@@ -19,16 +19,18 @@ on :
 jobs : 
   extractPRContents :
     outputs :
-      createRelease :
+      createRelease : ${{ steps.runPWSH.outputs.createRelease }}
         
     runs-on : ubuntu-latest
     steps :
       - name : run composite action
+        id : runCompositeAction
         uses : T4dP0les/consoleApp/actions/getChangedFiles@main
 
 
 
       - name : 'run powershell'
+        id : runPWSH
         shell : pwsh
         run : |
           $eventName = "${{ github.event_name }}"
@@ -55,8 +57,8 @@ jobs :
 
 
   release :
-    if : ${{ needs.extractPRContents.outputs.createRelease }}
     needs : extractPRContents
+    if : ${{ needs.extractPRContents.outputs.createRelease }}
     runs-on : ubuntu-latest
     steps : 
       - name : get var from previous job
