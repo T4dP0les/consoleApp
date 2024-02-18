@@ -41,6 +41,7 @@ jobs:
         ls -al / 
         mkdir $HOME/artefact
         ls -al / > $HOME/artefact/allFiles.txt
+        find $HOME -name "*.*"
         
     # Upload
     - name: folder struct 
