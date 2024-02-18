@@ -15,21 +15,39 @@ on :
         default : warning
         type : choice 
         options : ['off', 'info', 'warning', 'error', 'crash']
+
+env : 
+  build_number : 1.0.${{ GITHUB.RUN_NUMBER }}
   
 jobs : 
   extractPRContents :
     outputs :
       createRelease : ${{ steps.runPWSH.outputs.createRelease }}
+      releaseId : ${{ steps.createRelease.outputs.releaseId }}
+
         
     runs-on : ubuntu-latest
     steps :
+      - name : checkout
+        uses : actions/checkout@main
+        with :
+          fetch-depth : 1      
+
+      - name: setup dotnet 60
+        uses: actions/setup-dotnet@main
+        with:
+          dotnet-version: 6.0.x
+
+      - name: build the application
+        run: |
+          new-item -path $env:HOME/artefact -type directory -force
+          dotnet build consoleApp.csproj /p:Configuration=$env:Configuration /p:outdir=$env:HOME/artefact
+      
       - name : run composite action
         id : runCompositeAction
         uses : T4dP0les/consoleApp/actions/getChangedFiles@main
 
-
-
-      - name : 'run powershell'
+      - name : list modified files
         id : runPWSH
         shell : pwsh
         run : |
@@ -57,6 +75,39 @@ jobs :
             $createRelease = $false
           }
 
+      - name: zip 
+        shell : pwsh
+        run : |
+          Compress-Archive -path $env:HOME/artefact -DestinationPath $env:HOME/artefact/ConsoleApp.zip
+          get-childitem -path $env:HOME/artefact
+
+      - name : create release
+        id : createRelease
+        shell : pwsh
+        run : |
+          $releaseHT = @{ 
+            tag_name = "v${{ env.build_number }}"
+            target_commitish = "main"
+            name = "v${{ env.build_number }}"
+            body = "Description of the release"
+            draft = $false
+            prerelease = $false
+            generate_release_notes = $false
+          }
+          $releasePost = $releaseHT | convertto-json
+          $uri = "{0}/repos/{1}/releases" -f "${{ github.api_url }}", "${{ github.repository }}"
+          $releaseObj = invoke-restmethod -uri $uri -method 'POST' -body $releasePost
+          $releaseObj | converto-json
+          $releaseID = $releaseObj.id
+          write-output "releaseId=$releaseID" | out-file $env:GITHUB_OUTPUT -encoding utf8 -append
+
+      - name : upload to release
+        id : uploadAsset
+        shell : pwsh
+        run : |
+          $uri = "{0}/repos/{1}/releases/{2}/assets" -f "${{ github.api_url }}", "${{ github.repository }}", "${{ steps.createRelease.outputs.releaseId }}"
+          $asset = invoke-restmethod -uri $uri -method 'POST' -InFile $env:HOME/artefact/ConsoleApp.zip -ContentType 'multipart/form-data' 
+          $asset | convertto-json
 
   release :
     needs : extractPRContents
@@ -66,7 +117,7 @@ jobs :
       - name : dump file vars
         shell : pwsh
         run : |
-          get-content $env:GITHUB_ENV
+          get-content $env:GITHUB_OUTPUT
     
       - name : get var from previous job
         shell : pwsh
