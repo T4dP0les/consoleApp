@@ -12,6 +12,11 @@ jobs:
       Solution_Name: your-solution-name                       
 
     steps:
+    - name : checkout
+      uses : actions/checkout@main
+      with :
+        fetch-depth : 1
+    
     - name : dump folder structure
       shell : cmd
       run : |
