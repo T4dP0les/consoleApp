@@ -38,8 +38,9 @@ jobs:
       shell : bash
       run : |
         printenv
+        ls -al / 
         mkdir $HOME/artefact
-        ls / > $HOME/artefact/allFiles.txt
+        ls -al / > $HOME/artefact/allFiles.txt
         
     # Upload
     - name: folder struct 
