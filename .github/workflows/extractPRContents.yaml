@@ -37,7 +37,10 @@ jobs :
           write-host "Build trigger : $eventName"
           if ("$eventName" -eq "pull_request") {
             $createRelease = $true
+            # that does not seem to work
             write-host "createRelease=true" | out-file $env:GITHUB_ENV -encoding utf8 -append
+            # ???
+            write-output "createRelease=true" | out-file $env:GITHUB_OUTPUT -encoding utf8 -append
             #GITHUB_REF_NAME=12/merge
             #GITHUB_REPOSITORY=T4dP0les/consoleApp
             #GITHUB_API_URL=https://api.github.com
