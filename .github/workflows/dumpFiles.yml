@@ -37,8 +37,9 @@ jobs:
     - name : dump folder structure
       shell : bash
       run : |
-        mkdir /artefact
-        ls / > /artefact/allFiles.txt
+        get-childitem :env
+        mkdir /home/artefact
+        ls / > /home/artefact/allFiles.txt
         
     # Upload
     - name: folder struct 
