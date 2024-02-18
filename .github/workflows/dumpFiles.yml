@@ -24,7 +24,7 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: AllFilesWindows.txt
-        path: D:\Artefact
+        path: D:\Artefact\allFiles.txt
 
 
   build-linux:
@@ -41,11 +41,11 @@ jobs:
         ls -al / 
         mkdir $HOME/artefact
         ls -al / > $HOME/artefact/allFiles.txt
-        find $HOME -name "*.*"
+        #find $HOME -name "*.*"
         
     # Upload
     - name: folder struct 
       uses: actions/upload-artifact@main
       with:
         name: AllFilesLinux.txt
-        path: $HOME/artefact
+        path: $HOME/artefact/allFiles.txt
