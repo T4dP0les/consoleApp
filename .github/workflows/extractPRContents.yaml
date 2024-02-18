@@ -58,10 +58,15 @@ jobs :
 
   release :
     needs : extractPRContents
-    if : ${{ needs.extractPRContents.outputs.createRelease }}
     runs-on : ubuntu-latest
     steps : 
+      - name : dump file vars
+        shell : pwsh
+        run : |
+          get-contents $env:GITHUB_ENV
+    
       - name : get var from previous job
+        if : ${{ needs.extractPRContents.outputs.createRelease }}
         shell : pwsh
         run : |
           write-host "${{ needs.extractPRContents.outputs.createRelease }}"
