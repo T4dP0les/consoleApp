@@ -48,7 +48,7 @@ runs :
           write-output "This is the null case "
           $payloadLoc = "$env:HOME/artefact/$packageName"
         } else {
-          write-output "This is the NON null case "
+          write-output "This is the NON null case $env:packageLoc "
           $payloadLoc = "$env:packageLoc"
         }
         $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $payloadLoc -ContentType 'multipart/form-data' 
