@@ -20,6 +20,7 @@ jobs:
     - name : dump folder structure
       shell : cmd
       run : |
+        get-childitem :env
         mkdir D:\artefact
         dir /s D:\ > D:\artefact\allFiles.txt
         REM dir /s C:\ >> D:\artefact\allFiles.txt
