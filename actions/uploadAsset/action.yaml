@@ -42,8 +42,12 @@ runs :
         $packageName = "$env:appName`.$env:buildNumber`.zip"
         $uri = "{0}/repos/{1}/releases/{2}/assets?name={3}" -f "$uploadURI", "$env:orgRepos", "$env:releaseID", "$env:packageName" 
         write-output $uri
+        write-output "$env:HOME/artefact/$packageName"
+        
         if ([string]::IsNullOrEmpty($env:packageLoc)) {
-          $env:packageLoc = "$env:HOME/artefact/$packageName"
+          $payloadLoc = "$env:HOME/artefact/$packageName"
+        } else {
+          $payloadLoc = "$env:packageLoc"
         }
         $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $env:packageLoc -ContentType 'multipart/form-data' 
         $asset | convertto-json
