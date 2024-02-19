@@ -43,9 +43,9 @@ runs :
         $uri = "{0}/repos/{1}/releases/{2}/assets?name={3}" -f "$uploadURI", "$env:orgRepos", "$env:releaseID", "$env:packageName" 
         write-output $uri
         if ([string]::IsNullOrEmpty($env:packageLoc)) {
-          $packageLoc = "$env:HOME/artefact/$packageName"
+          $env:packageLoc = "$env:HOME/artefact/$packageName"
         }
-        $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $packageLoc -ContentType 'multipart/form-data' 
+        $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $env:packageLoc -ContentType 'multipart/form-data' 
         $asset | convertto-json
       env :
         buildNumber : ${{ inputs.build_number }}
