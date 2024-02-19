@@ -127,7 +127,9 @@ jobs :
           github_repository : ${{ github.repository }}
           release_id : ${{ steps.delegatedCreateRelease.outputs.release_id }}
           application_name : consoleApp
-          package_full_path : $env:HOME/artefact/ConsoleApp.zip
+          # that is not working as the expression is not expanded
+          #package_full_path : $env:HOME/artefact/ConsoleApp.zip
+          package_full_path : $HOME/artefact/ConsoleApp.zip
 
       - name : upload to release
         if : ${{ false }}
