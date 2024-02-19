@@ -1,4 +1,4 @@
-name : Get PR Contents
+name : Get PR Contents from Shared
 
 on :
   pull_request : 
