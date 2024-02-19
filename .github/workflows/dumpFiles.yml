@@ -19,11 +19,12 @@ jobs:
     - name : dump env vars 
       shell : pwsh
       run : |
-        get-childitem :env
+        get-childitem env:
 
     - name : dump folder structure
       shell : cmd
       run : |
+        SET
         mkdir D:\artefact
         dir /s D:\ > D:\artefact\allFiles.txt
         REM dir /s C:\ >> D:\artefact\allFiles.txt
