@@ -12,6 +12,6 @@ on :
 
 jobs : 
   call_external :
-    uses : T4dP0les/sharedWorflows/.github/workflows/extractPRContents.yaml@main
+    uses : T4dP0les/sharedWorkflows/.github/workflows/extractPRContents.yaml@main
     secrets :
       github_token : ${{ secrets.GITHUB_TOKEN }}
