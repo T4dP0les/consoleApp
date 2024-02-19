@@ -45,7 +45,7 @@ runs :
           Authorization="Bearer $authToken"
         }
         $releasePost = $releaseHT | convertto-json
-        $uri = "{0}/repos/{1}/releases" -f "$baseURL", "$orgRepos}"
+        $uri = "{0}/repos/{1}/releases" -f "$baseURL", "$orgRepos"
         $releaseObj = invoke-restmethod -uri $uri -method 'POST' -body $releasePost -headers $headers
         $releaseObj | convertto-json
         $releaseID = $releaseObj.id
