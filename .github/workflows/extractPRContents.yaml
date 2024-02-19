@@ -82,7 +82,18 @@ jobs :
           Compress-Archive -path $env:HOME/artefact -DestinationPath $env:HOME/artefact/ConsoleApp.zip
           get-childitem -path $env:HOME/artefact
 
+      - name : delegated create release 
+        id : delegatedCreateRelease
+        uses : T4dP0les/consoleApp/actions/createRelease@main
+        with : 
+          build_number : ${{ env.build_number }}
+          rest_api_auth : ${{ secrets.GITPOSTAUTH }}
+          github_api_url : ${{ github.api_url }}
+          github_repository : ${{ github.repository }}
+
+
       - name : create release
+        if : ${{ false }}
         id : createRelease
         shell : pwsh
         run : |
@@ -95,7 +106,6 @@ jobs :
             prerelease = $false
             generate_release_notes = $false
           }
-
           $headers = @{
             Authorization="Bearer ${{ secrets.GITPOSTAUTH }}"
           }
@@ -106,7 +116,21 @@ jobs :
           $releaseID = $releaseObj.id
           write-output "releaseId=$releaseID" | out-file $env:GITHUB_OUTPUT -encoding utf8 -append
 
+
+      - name : delegated upload to release
+        id : delegatedUploadAsset
+        uses : T4dP0les/consoleApp/actions/uploadAsset@main
+        with : 
+          build_number : ${{ env.build_number }}
+          rest_api_auth : ${{ secrets.GITPOSTAUTH }}
+          github_api_url : ${{ github.api_url }}
+          github_repository : ${{ github.repository }}
+          release_id : ${{ steps.delegatedCreateRelease.outputs.release_id }}
+          application_name : consoleApp
+          package_full_path : $env:HOME/artefact/ConsoleApp.zip
+
       - name : upload to release
+        if : ${{ false }}
         id : uploadAsset
         shell : pwsh
         run : |
