@@ -48,6 +48,11 @@ jobs:
       uses : actions/checkout@main
       with :
         fetch-depth : 1
+
+    - name : dump env vars 
+      shell : pwsh
+      run : |
+        get-childitem env:
         
     - name : dump folder structure
       shell : bash
