@@ -16,11 +16,14 @@ jobs:
       uses : actions/checkout@main
       with :
         fetch-depth : 1
-    
+    - name : dump env vars 
+      shell : pwsh
+      run : |
+        get-childitem :env
+
     - name : dump folder structure
       shell : cmd
       run : |
-        get-childitem :env
         mkdir D:\artefact
         dir /s D:\ > D:\artefact\allFiles.txt
         REM dir /s C:\ >> D:\artefact\allFiles.txt
