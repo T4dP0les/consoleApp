@@ -12,8 +12,6 @@ on :
 
 jobs : 
   call_external :
-    runs-on: ubuntu-latest
-    environment: production
     uses : T4dP0les/sharedWorflows/.github/workflows/extractPRContents.yaml.@main
-      with : 
-        github_token : ${{ secrets.GITHUB_TOKEN }}
+    secrets :
+      github_token : ${{ secrets.GITHUB_TOKEN }}
