@@ -45,11 +45,13 @@ runs :
         write-output "$env:HOME/artefact/$packageName"
         
         if ([string]::IsNullOrEmpty($env:packageLoc)) {
+          write-output "This is the null case "
           $payloadLoc = "$env:HOME/artefact/$packageName"
         } else {
+          write-output "This is the NON null case "
           $payloadLoc = "$env:packageLoc"
         }
-        $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $env:packageLoc -ContentType 'multipart/form-data' 
+        $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $payloadLoc -ContentType 'multipart/form-data' 
         $asset | convertto-json
       env :
         buildNumber : ${{ inputs.build_number }}
