@@ -16,6 +16,8 @@ jobs :
       actions: write
     #permissions: write-all
     uses : T4dP0les/sharedWorkflows/.github/workflows/extractPRContents.yaml@main
+    with :
+      build_number : ${{ GITHUB.RUN_NUMBER }}
     secrets :
       # the default created token does not appear to be usable outside of the start repos
       #caller_github_token : ${{ secrets.GITHUB_TOKEN }}
