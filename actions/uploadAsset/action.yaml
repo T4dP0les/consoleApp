@@ -38,11 +38,11 @@ runs :
         $headers = @{
           Authorization="Bearer $authToken"
         }
-        $uploadURI = "$baseURL" -replace('api','uploads')
-        $packageName = "$appName`.$buildNumber`.zip"
-        $uri = "{0}/repos/{1}/releases/{2}/assets?name={3}" -f "$uploadURI", "$orgRepos", "$releaseID", "$packageName" 
+        $uploadURI = "$env:baseURL" -replace('api','uploads')
+        $packageName = "$env:appName`.$env:buildNumber`.zip"
+        $uri = "{0}/repos/{1}/releases/{2}/assets?name={3}" -f "$uploadURI", "$env:orgRepos", "$env:releaseID", "$env:packageName" 
         write-output $uri
-        if ([string]::IsNullOrEmpty($packageLoc)) {
+        if ([string]::IsNullOrEmpty($env:packageLoc)) {
           $packageLoc = $env:HOME/artefact/$packageName
         }
         $asset = invoke-restmethod -uri $uri -method 'POST' -headers $headers -InFile $packageLoc -ContentType 'multipart/form-data' 
