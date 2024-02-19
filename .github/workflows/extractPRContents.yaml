@@ -129,7 +129,7 @@ jobs :
           application_name : consoleApp
           # that is not working as the expression is not expanded
           #package_full_path : $env:HOME/artefact/ConsoleApp.zip
-          package_full_path : $HOME/artefact/ConsoleApp.zip
+          package_full_path : ${{ env.HOME }}/artefact/ConsoleApp.zip
 
       - name : upload to release
         if : ${{ false }}
