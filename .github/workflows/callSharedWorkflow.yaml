@@ -1,0 +1,21 @@
+name : Get PR Contents
+
+on :
+  pull_request : 
+    branches : 
+      - main
+      - feature/*
+    paths-ignore: 
+      - '.github/**'
+          
+  workflow_dispatch : 
+
+jobs : 
+  call_external :
+    runs-on: ubuntu-latest
+    environment: production
+    steps : 
+      - name : call external workflow
+        uses : T4dP0les/sharedWorflows/.github/workflows/extractPRContents.yaml.@main
+        with : 
+          github_token : ${{ secrets.GITHUB_TOKEN }}
