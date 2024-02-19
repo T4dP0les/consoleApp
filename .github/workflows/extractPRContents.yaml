@@ -110,7 +110,8 @@ jobs :
         id : uploadAsset
         shell : pwsh
         run : |
-          $uri = "{0}/repos/{1}/releases/{2}/assets" -f "${{ github.api_url }}" -replace('api','uploads'), "${{ github.repository }}", "${{ steps.createRelease.outputs.releaseId }}"
+          $uploadURI = "${{ github.api_url }}" -replace('api','uploads')
+          $uri = "{0}/repos/{1}/releases/{2}/assets" -f "$uploadURI", "${{ github.repository }}", "${{ steps.createRelease.outputs.releaseId }}"
           write-out $uri
           $asset = invoke-restmethod -uri $uri -method 'POST' -InFile $env:HOME/artefact/ConsoleApp.zip -ContentType 'multipart/form-data' 
           $asset | convertto-json
