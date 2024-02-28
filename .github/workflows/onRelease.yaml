@@ -1,0 +1,25 @@
+name : on release
+
+on : 
+  release : 
+    type : [released]
+  workflow_dispatch :
+  
+jobs : 
+  acknowledge :
+    runs-on : ubuntu-latest
+    steps : 
+      - # step 1
+        name : first step
+        id : somethingToSay 
+        shell : pwsh 
+        run : >
+          write-host "something happened"; 
+          write-host "test"
+          write-host "that may not work"
+
+      - # step 2
+        name : dump events
+        shell : pwsh
+        run : |
+          get-content -path ${{ GITHUB.EVENT_PATH }}
