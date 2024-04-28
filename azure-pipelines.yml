@@ -6,6 +6,9 @@
 trigger:
 - __main__
 
+variables:
+  - name: system.debug
+    value: true
 resources:
   webhooks:
     - webhook: GitHubIntegration
@@ -21,7 +24,8 @@ steps:
     targetType: 'inline'
     script: |
       get-childitem env:
-      start-sleep -Seconds 240
+      #start-sleep -Seconds 240
+
 
 
 - script: echo Hello, world!
