@@ -16,10 +16,6 @@ pool:
 
 steps:
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      SET
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
