@@ -15,6 +15,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: CmdLine@2
+  displayName: Dump env vars
+  inputs:
+    script: |
+      SET
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
