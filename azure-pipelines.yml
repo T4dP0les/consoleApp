@@ -17,29 +17,59 @@ resources:
 pool:
   vmImage: ubuntu-latest
 
-steps:
+stages :
+- # first stage 
+  stage : Build
+  displayName : build stage
+  jobs :
+  - job : first_job
+    displayName : first job
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      get-childitem env:
-      #start-sleep -Seconds 240
+    steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          get-childitem env:
+          #start-sleep -Seconds 240
+
+    - script: echo Hello, world!
+      displayName: 'Run a one-line script'
+
+    - script: |
+        echo Add other tasks to build, test, and deploy your project.
+        echo See https://aka.ms/yaml
+      ${{ if true }}: 
+        ${{ if false }}: 
+          displayName : 'Run a multi-line script'
+        ${{ else }}:
+          displayName : 'NESTED Run a multi-line script'
+      ${{ else }}:
+        displayName :   'some else'
+      name : test
+      workingDirectory : / 
+
+- # 2nd stage
+  stage : Deployment
+  displayName : deployment stage
+  jobs:
+  - deployment : 
+    displayName : deployment job
+    environment : 
+      name : test
+      resourceName : fedora
+      #tags : smallPC
+    strategy :
+     runOnce :
+       deploy : 
+        steps :
+        - task : Bash@3
+          inputs :
+            targetType : inline
+            script : |
+              cd /home/smallpc
+              echo toto > stupidFile.txt
+            
 
 
 
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  ${{ if true }}: 
-    ${{ if false }}: 
-      displayName : 'Run a multi-line script'
-    ${{ else }}:
-      displayName : 'NESTED Run a multi-line script'
-  ${{ else }}:
-    displayName :   'some else'
-  name : test
-  workingDirectory : / 
