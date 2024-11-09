@@ -38,3 +38,5 @@ steps:
     displayName : 'Run a multi-line script'
   ${{ else }}:
     displayName :   'some else'
+  name : test
+  workingDirectory : / 
