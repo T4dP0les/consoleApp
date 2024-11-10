@@ -57,8 +57,9 @@ stages :
     displayName : deployment job
     environment : 
       name : test
-      resourceName : fedora
-      #tags : smallPC
+      #resourceName : fedora
+      resourceType : VirtualMachine
+      tags : smallPC
     strategy :
      runOnce :
        deploy : 
