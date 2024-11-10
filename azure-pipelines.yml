@@ -69,7 +69,7 @@ stages :
             targetType : inline
             script : |
               cd /home/smallpc
-              echo toto > stupidFile.txt
+              echo Pipeline ran on : $(date) > stupidFile.txt
             
 
 
